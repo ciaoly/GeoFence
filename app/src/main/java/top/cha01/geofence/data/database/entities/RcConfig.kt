@@ -3,9 +3,8 @@ import androidx.room.*
 
 @Entity(tableName = "rc_config")
 data class RcConfig(
-    @PrimaryKey(autoGenerate = true) val Id: Int = 0,
     val Name: String,
-    val Memo: String?,
+    val Memo: String = "",
     val CreateDate: String = "",
     val PulseLength: Int = 350,
     val SyncBitHigh: Int = 1,
@@ -17,5 +16,6 @@ data class RcConfig(
     val InvertedSignal: Boolean = false,
     val RepeatTimes: Int = 3,
     val RepeatWaitTime: Int = 0,
-    val Code: String
-)
+    val Code: String,
+    val RevertCode: String
+): BaseEntity()

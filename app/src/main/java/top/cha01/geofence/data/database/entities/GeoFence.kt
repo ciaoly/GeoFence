@@ -8,17 +8,17 @@ import androidx.room.*
         parentColumns = ["Id"],
         childColumns = ["Rid"],
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index(value = ["Rid"])]
 )
 
 data class GeoFence(
-    @PrimaryKey(autoGenerate = true) val Id: Int = 0,
     val Rid: Int?,
     val Name: String,
-    val Memo: String?,
+    val Memo: String = "",
     val CreateDate: String = "",
     val OrderNo: Int = 0,
     val Radius: Float = 3f,
     val Latitude: Double,
     val Longitude: Double
-)
+): BaseEntity()

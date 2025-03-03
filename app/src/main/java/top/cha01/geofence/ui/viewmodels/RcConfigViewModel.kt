@@ -10,19 +10,21 @@ import top.cha01.geofence.data.database.daos.RcConfigDao
 import top.cha01.geofence.data.database.entities.RcConfig
 
 class RcConfigViewModel(private val dao: RcConfigDao) : ViewModel() {
-    val geoFences: StateFlow<List<RcConfig>> = dao.getAllRcConfigs().stateIn(
+    val rcConfigList: StateFlow<List<RcConfig>> = dao.getAllRcConfigs().stateIn(
         viewModelScope, SharingStarted.Lazily, emptyList()
     )
 
-    fun addGeoFence(rcConfig: RcConfig) {
+    fun addRcConfig(rcConfig: RcConfig) {
         viewModelScope.launch {
             dao.insert(rcConfig)
         }
     }
 
-    fun deleteGeoFence(rcConfig: RcConfig) {
+    fun deleteRcConfig(rcConfig: RcConfig) {
         viewModelScope.launch {
             dao.delete(rcConfig)
         }
     }
+
+
 }

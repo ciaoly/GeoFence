@@ -14,4 +14,5 @@ interface RcConfigDao {
 
     @Delete
     suspend fun delete(rcConfig: RcConfig)
+
 }

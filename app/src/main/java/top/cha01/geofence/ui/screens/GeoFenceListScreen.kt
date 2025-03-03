@@ -1,11 +1,16 @@
 package top.cha01.geofence.ui.screens
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -18,32 +23,34 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import top.cha01.geofence.data.database.daos.GeoFenceDao
+import top.cha01.geofence.data.database.entities.GeoFence
 import top.cha01.geofence.ui.viewmodels.GeoFenceViewModel
 
-@Composable
-fun GeoFenceListScreen(navController: NavController, viewModel: GeoFenceViewModel) {
-    val geoFences by viewModel.geoFences.collectAsState(initial = emptyList())
+class GeoFenceListScreen(viewModel: GeoFenceViewModel): BaseComposableListContent<GeoFence, GeoFenceViewModel>(viewModel) {
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("edit_geo_fence") }) {
-                Icon(Icons.Default.Add, contentDescription = "添加")
-            }
-        }
+    constructor(dao: GeoFenceDao): this(GeoFenceViewModel(dao))
+
+    @Composable
+    override fun itemDataFromViewModal(): List<GeoFence> {
+        val geoFences by viewModel.geoFences.collectAsState(initial = emptyList())
+        return geoFences
+    }
+
+    @OptIn(ExperimentalSharedTransitionApi::class)
+    @Composable
+    override fun buildItemContent(
+        itemData: GeoFence,
+        modifier: Modifier,
+        isListAndDetailVisible: Boolean,
+        isListVisible: Boolean,
+        sharedTransitionScope: SharedTransitionScope,
+        animatedVisibilityScope: AnimatedVisibilityScope
     ) {
-        padding -> LazyColumn(
-            modifier = Modifier.fillMaxHeight().padding(padding),
-            contentPadding = PaddingValues(6.dp)) {
-            items(geoFences) { geoFence ->
-                ListItem(
-                    headlineContent = { Text(geoFence.Name) },
-                    supportingContent = { Text("半径: ${geoFence.Radius}m") },
-                    modifier = Modifier.clickable {
-                        navController.navigate("edit_geo_fence/${geoFence.Id}")
-                    }
-                )
-            }
-        }
+        ListItem(
+            headlineContent = { Text(itemData.Name) },
+            supportingContent = { Text("半径: ${itemData.Radius}m") },
+            modifier = modifier
+        )
     }
 }

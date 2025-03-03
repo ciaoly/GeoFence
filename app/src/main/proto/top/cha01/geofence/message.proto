@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option java_package = "top.cha01.geofence.protobuf";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+message Request {
+  enum Method {
+    UNKNOWN = 0;
+    HELLO = 1;
+    PROTO = 2;
+    REPEAT = 3;
+    SEND = 4;
+    SEND_INTEGRATION = 5;
+    RECEIVE = 6;
+  }
+  Method method = 1;
+  oneof payload {
+    Protocol proto = 2;
+    RepeatTimes repeat = 3;
+    string send_code = 4;
+    SendIntegration send_integration = 5;
+    bool enable_receive = 6;
+  }
+}
+
+message HighLow {
+  uint32 high = 1;
+  uint32 low = 2;
+}
+
+message Protocol {
+  uint32 pulselength = 1;
+  HighLow sync_factor = 2;
+  HighLow zero = 3;
+  HighLow one = 4;
+  bool inverted_signal = 5;
+}
+
+message RepeatTimes {
+  uint32 times = 1;
+}
+
+message SendIntegration {
+  string code = 1;
+  Protocol protocol = 2;
+  RepeatTimes repeat_times = 3;
+}
+
+message Response {
+  enum Status {
+    OK = 0;
+    ERROR = 1;
+  }
+  Status status = 1;
+  oneof message {
+    string msg = 2;
+    ReceivedData received_data = 3;
+  }
+}
+
+message ReceivedData {
+  uint64 received_value = 1;
+  uint32 received_bitlength = 2;
+  uint32 received_delay = 3;
+  uint32 received_protocol = 4;
+  bytes received_rawdata = 5;
+}
