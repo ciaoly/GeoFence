@@ -20,7 +20,7 @@ class UsbSerialDevicesListScreen(viewModel: UsbSerialDevicesViewModel): BaseComp
     @ExperimentalSharedTransitionApi
     @Composable
     override fun buildItemContent(
-        itemId: UsbSerialDevice,
+        itemData: UsbSerialDevice,
         modifier: Modifier,
         isListAndDetailVisible: Boolean,
         isListVisible: Boolean,

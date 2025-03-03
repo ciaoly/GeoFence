@@ -3,6 +3,7 @@ package top.cha01.geofence.ui.viewmodels
 import android.hardware.usb.UsbManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hoho.android.usbserial.driver.UsbSerialProber
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,17 +14,18 @@ import kotlinx.coroutines.launch
 import top.cha01.geofence.data.RcModuleListener
 import top.cha01.geofence.data.UsbSerialDevice
 import top.cha01.geofence.libs.UsbSerial.CustomProber
+import top.cha01.geofence.libs.UsbSerial.DeviceEndpoints
 import top.cha01.geofence.protobuf.Request
+import top.cha01.geofence.protobuf.Response
 
-class UsbSerialDevicesViewModel(private val usbManager: UsbManager) : ViewModel(), RcModuleListener {
+class UsbSerialDevicesViewModel(private val usbManager: UsbManager, private val endpoints: DeviceEndpoints) : ViewModel(){
     private val _usbSerialDevices = MutableStateFlow<List<UsbSerialDevice>>(emptyList())
     val usbSerialDevices: StateFlow<List<UsbSerialDevice>> = _usbSerialDevices.stateIn(
         viewModelScope, SharingStarted.Lazily, emptyList()
     )
 
-    private val _serialData = MutableSharedFlow<String>()
-    val serialData: StateFlow<String> = _serialData.stateIn(
-        viewModelScope, SharingStarted.Lazily, ""
+    val serialData: StateFlow<Response?> = endpoints.readEndpoint.stateIn(
+        viewModelScope, SharingStarted.Lazily, null
     )
 
     init {
@@ -36,6 +38,12 @@ class UsbSerialDevicesViewModel(private val usbManager: UsbManager) : ViewModel(
         viewModelScope.launch {
             _usbSerialDevices.value = emptyList()
             _usbSerialDevices.value = scanUsbDevices()
+        }
+    }
+
+    fun writeData(request: Request) {
+        viewModelScope.launch {
+            endpoints.writeData(request)
         }
     }
 
@@ -61,21 +69,4 @@ class UsbSerialDevicesViewModel(private val usbManager: UsbManager) : ViewModel(
         return listItems
     }
 
-    override fun onSerialConnect() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSerialConnectError(e: Exception?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSerialRead(data: String) {
-        viewModelScope.launch {
-            _serialData.emit(data)
-        }
-    }
-
-    override fun onSerialIoError(e: Exception?) {
-        TODO("Not yet implemented")
-    }
 }

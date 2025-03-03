@@ -120,12 +120,12 @@ abstract class BaseComposableListContent<T: BaseListItemType, V: ViewModel>(prot
 
     @Composable
     @OptIn(ExperimentalSharedTransitionApi::class)
-    abstract fun buildItemContent(itemId: T,
-                             modifier: Modifier,
-                             isListAndDetailVisible: Boolean,
-                             isListVisible: Boolean,
-                             sharedTransitionScope: SharedTransitionScope,
-                             animatedVisibilityScope: AnimatedVisibilityScope
+    abstract fun buildItemContent(itemData: T,
+                                  modifier: Modifier,
+                                  isListAndDetailVisible: Boolean,
+                                  isListVisible: Boolean,
+                                  sharedTransitionScope: SharedTransitionScope,
+                                  animatedVisibilityScope: AnimatedVisibilityScope
     )
 }
 
