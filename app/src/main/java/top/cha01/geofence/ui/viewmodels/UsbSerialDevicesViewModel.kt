@@ -3,15 +3,12 @@ package top.cha01.geofence.ui.viewmodels
 import android.hardware.usb.UsbManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hoho.android.usbserial.driver.UsbSerialProber
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import top.cha01.geofence.data.RcModuleListener
 import top.cha01.geofence.data.UsbSerialDevice
 import top.cha01.geofence.libs.UsbSerial.CustomProber
 import top.cha01.geofence.libs.UsbSerial.DeviceEndpoints

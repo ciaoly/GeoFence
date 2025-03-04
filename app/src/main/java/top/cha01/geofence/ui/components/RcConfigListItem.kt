@@ -50,7 +50,7 @@ import top.cha01.geofence.data.database.entities.RcConfig
 fun RcConfigListItem(
     config: RcConfig,
 //    navigateToDetail: (Int) -> Unit,
-    toggleSelection: (Int) -> Unit,
+//    toggleSelection: (Int) -> Unit,
     upButtonClick: (Int) -> Unit,
     downButtonClick: (Int) -> Unit,
 //    modifier: Modifier = Modifier,
@@ -79,13 +79,9 @@ fun RcConfigListItem(
                 .padding(20.dp)
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                val clickModifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { toggleSelection(config.Id) }
                 AnimatedContent(targetState = isSelected, label = "avatar") { selected ->
                     if (selected) {
-                        SelectedProfileImage(clickModifier)
+                        SelectedProfileImage(Modifier)
                     } else {
                         SingleChoiceSegmentedButtonRow {
                             SegmentedButton(

@@ -1,4 +1,4 @@
-package top.cha01.geofence.data
+package top.cha01.geofence.libs.UsbSerial
 
 
 interface RcModuleListener {

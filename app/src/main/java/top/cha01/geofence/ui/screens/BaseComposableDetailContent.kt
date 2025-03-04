@@ -23,15 +23,15 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseComposableDetailContent<T, V: ViewModel>(protected val viewModel: V) {
     @OptIn(ExperimentalSharedTransitionApi::class)
-
-    val ComposableScreen: detailContentType = @Composable {
+    @Composable
+    fun ComposableScreen(
         selectedId: Int,
         modifier: Modifier,
         isListAndDetailVisible: Boolean,
         isDetailVisible: Boolean,
         sharedTransitionScope: SharedTransitionScope,
         animatedVisibilityScope: AnimatedVisibilityScope
-    ->
+    ){
         val itemData = itemDataFromViewModal(selectedId)
         Scaffold(
 

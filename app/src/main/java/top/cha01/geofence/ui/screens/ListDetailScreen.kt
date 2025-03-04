@@ -46,10 +46,8 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
 typealias listContentType = @Composable (
-    selectionState: SelectionVisibilityState,
-    onAdd: () -> Unit,
-    onIndexClick: (index: Int, itemId: Int) -> Unit,
     modifier: Modifier,
+    onIndexClick: (index: Int, itemId: Int) -> Unit,
     isListAndDetailVisible: Boolean,
     isListVisible: Boolean,
     sharedTransitionScope: SharedTransitionScope,
@@ -57,7 +55,6 @@ typealias listContentType = @Composable (
 ) -> Unit
 
 typealias detailContentType = @Composable (
-    selectedId: Int,
     modifier: Modifier,
     isListAndDetailVisible: Boolean,
     isDetailVisible: Boolean,
@@ -93,16 +90,6 @@ fun ListDetailScreen(listContent: listContentType, detailContent: detailContentT
                         navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
                     AnimatedPane {
                         listContent(
-                            selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
-                                SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
-                            } else {
-                                SelectionVisibilityState.NoSelection
-                            },
-                            onAdd = {
-                                scope.launch {
-                                    navigator.navigateBack()
-                                }
-                            },
                             modifier = Modifier,
                             onIndexClick = { index, itemId ->
                                 selectedItemIndex = index
@@ -123,7 +110,6 @@ fun ListDetailScreen(listContent: listContentType, detailContent: detailContentT
                         navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
                     AnimatedPane {
                         detailContent(
-                            selectedId = selectedItemId ?: -1,
                             modifier = Modifier,
                             isListAndDetailVisible = isListAndDetailVisible,
                             isDetailVisible = isDetailVisible,

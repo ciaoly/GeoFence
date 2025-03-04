@@ -38,7 +38,7 @@ import top.cha01.geofence.data.database.entities.GeoFence
 fun GeoFenceListItem(
     fence: GeoFence,
 //    navigateToDetail: (Int) -> Unit,
-    toggleSelection: (Int) -> Unit,
+//    toggleSelection: (Int) -> Unit,
 //    modifier: Modifier = Modifier,
 //    isOpened: Boolean = false,
     isSelected: Boolean = false,
@@ -65,13 +65,9 @@ fun GeoFenceListItem(
                 .padding(20.dp)
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                val clickModifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { toggleSelection(fence.Id) }
                 AnimatedContent(targetState = isSelected, label = "avatar") { selected ->
                     if (selected) {
-                        SelectedProfileImage(clickModifier)
+                        SelectedProfileImage(Modifier)
                     }
                 }
 

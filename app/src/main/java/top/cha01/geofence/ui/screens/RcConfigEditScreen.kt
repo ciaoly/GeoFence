@@ -19,8 +19,6 @@ import top.cha01.geofence.ui.viewmodels.RcConfigViewModel
 
 class RcConfigEditScreen(viewModel: RcConfigViewModel): BaseComposableDetailContent<RcConfig, RcConfigViewModel>(viewModel) {
 
-    constructor(dao: RcConfigDao): this(RcConfigViewModel(dao))
-
     @Composable
     override fun itemDataFromViewModal(id: Int): RcConfig {
         val rcConfig = viewModel.rcConfigList.value.find { it.Id == id }

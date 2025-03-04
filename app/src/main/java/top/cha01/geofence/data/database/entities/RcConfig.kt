@@ -17,5 +17,5 @@ data class RcConfig(
     val RepeatTimes: Int = 3,
     val RepeatWaitTime: Int = 0,
     val Code: String,
-    val RevertCode: String
+    val RevertCode: String = ""
 ): BaseEntity()
