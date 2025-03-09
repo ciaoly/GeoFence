@@ -1,11 +1,13 @@
 package top.cha01.geofence.data.database.entities
 import androidx.room.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Entity(tableName = "rc_config")
 data class RcConfig(
     val Name: String,
     val Memo: String = "",
-    val CreateDate: String = "",
+    val CreateDate: String = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     val PulseLength: Int = 350,
     val SyncBitHigh: Int = 1,
     val SyncBitLow: Int = 31,

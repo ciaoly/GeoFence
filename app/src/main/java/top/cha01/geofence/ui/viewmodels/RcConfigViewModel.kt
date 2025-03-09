@@ -119,13 +119,19 @@ class RcConfigViewModel(private val dao: RcConfigDao, private val endpoints: Dev
         return isValid
     }
 
-    fun addRcConfig(rcConfig: RcConfig) {
+    fun saveRcConfig() {
+        if (!validate()) return
+        val _config = selectedConfig?: toRcConfig()
+        saveRcConfigToDB(_config)
+    }
+
+    fun saveRcConfigToDB(rcConfig: RcConfig) {
         viewModelScope.launch {
             dao.insert(rcConfig)
         }
     }
 
-    fun deleteRcConfig(rcConfig: RcConfig) {
+    fun deleteRcConfigFromDB(rcConfig: RcConfig) {
         viewModelScope.launch {
             dao.delete(rcConfig)
         }

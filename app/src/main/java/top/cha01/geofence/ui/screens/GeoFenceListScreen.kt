@@ -28,8 +28,8 @@ class GeoFenceListScreen(viewModel: GeoFenceViewModel): BaseComposableListConten
         isListAndDetailVisible: Boolean,
         isListVisible: Boolean,
         isSelected: Boolean,
-        sharedTransitionScope: SharedTransitionScope,
-        animatedVisibilityScope: AnimatedVisibilityScope
+        sharedTransitionScope: SharedTransitionScope?,
+        animatedVisibilityScope: AnimatedVisibilityScope?
     ) {
         GeoFenceListItem(itemData, isSelected)
     }

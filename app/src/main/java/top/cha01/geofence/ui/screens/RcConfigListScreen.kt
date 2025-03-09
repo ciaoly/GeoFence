@@ -29,8 +29,8 @@ class RcConfigListScreen(viewModel: RcConfigViewModel): BaseComposableListConten
         isListAndDetailVisible: Boolean,
         isListVisible: Boolean,
         isSelected: Boolean,
-        sharedTransitionScope: SharedTransitionScope,
-        animatedVisibilityScope: AnimatedVisibilityScope
+        sharedTransitionScope: SharedTransitionScope?,
+        animatedVisibilityScope: AnimatedVisibilityScope?
     ) {
         RcConfigListItem(
             itemData,

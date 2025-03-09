@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -23,32 +24,29 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseComposableDetailContent<T, V: ViewModel>(protected val viewModel: V) {
     @OptIn(ExperimentalSharedTransitionApi::class)
-    @Composable
-    fun ComposableScreen(
-        selectedId: Int,
+
+    val ComposableScreen: detailContentType = @Composable {
         modifier: Modifier,
         isListAndDetailVisible: Boolean,
         isDetailVisible: Boolean,
-        sharedTransitionScope: SharedTransitionScope,
-        animatedVisibilityScope: AnimatedVisibilityScope
-    ){
-        val itemData = itemDataFromViewModal(selectedId)
-        Scaffold(
-
-        ) { padding ->
+        sharedTransitionScope: SharedTransitionScope?,
+        animatedVisibilityScope: AnimatedVisibilityScope?
+        ->
+        val itemData = itemDataFromViewModal()
+        Card() {
             buildItemContent(
-                    itemData,
-                    modifier = modifier.padding(padding),
-                    isListAndDetailVisible,
-                    isDetailVisible,
-                    sharedTransitionScope,
-                    animatedVisibilityScope
-                )
-            }
+                itemData,
+                modifier = modifier,
+                isListAndDetailVisible,
+                isDetailVisible,
+                sharedTransitionScope,
+                animatedVisibilityScope
+            )
+        }
     }
 
     @Composable
-    abstract fun itemDataFromViewModal(id: Int): T
+    abstract fun itemDataFromViewModal(): T
 
     @Composable
     @OptIn(ExperimentalSharedTransitionApi::class)
@@ -56,7 +54,7 @@ abstract class BaseComposableDetailContent<T, V: ViewModel>(protected val viewMo
                              modifier: Modifier,
                              isListAndDetailVisible: Boolean,
                              isDetailVisible: Boolean,
-                             sharedTransitionScope: SharedTransitionScope,
-                             animatedVisibilityScope: AnimatedVisibilityScope
+                             sharedTransitionScope: SharedTransitionScope?,
+                             animatedVisibilityScope: AnimatedVisibilityScope?
     )
 }

@@ -23,8 +23,8 @@ class GeoFenceEditScreen(viewModel: GeoFenceViewModel): BaseComposableDetailCont
     constructor(dao: GeoFenceDao): this(GeoFenceViewModel(dao))
 
     @Composable
-    override fun itemDataFromViewModal(id: Int): GeoFence {
-        val geoFence = viewModel.geoFences.value.find { it.Id == id }
+    override fun itemDataFromViewModal(): GeoFence {
+        val geoFence = viewModel.geoFences.value.find { it.Id == 0 }
             ?: GeoFence(Rid = null, Name = "", Latitude = 0.0, Longitude = 0.0)
         return geoFence
     }
@@ -36,8 +36,8 @@ class GeoFenceEditScreen(viewModel: GeoFenceViewModel): BaseComposableDetailCont
         modifier: Modifier,
         isListAndDetailVisible: Boolean,
         isDetailVisible: Boolean,
-        sharedTransitionScope: SharedTransitionScope,
-        animatedVisibilityScope: AnimatedVisibilityScope
+        sharedTransitionScope: SharedTransitionScope?,
+        animatedVisibilityScope: AnimatedVisibilityScope?
     ) {
         var name by remember { mutableStateOf(itemData.Name) }
 

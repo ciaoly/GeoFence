@@ -12,14 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,31 +32,20 @@ import kotlinx.coroutines.flow.StateFlow
 
 abstract class BaseComposableListContent<T: BaseListItemType, V: ViewModel>(protected val viewModel: V) {
 
-    open val actionButtonIcon: () -> @Composable () -> Unit =  { @Composable { Icon(Icons.Default.Add, contentDescription = "添加")} }
-
     @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalFoundationApi::class)
-    @Composable
-    fun ComposableScreen(
-        onAdd: () -> Unit,
-        onItemClick: (index: Int, itemId: Int) -> Unit,
+    val ComposableScreen: listContentType = @Composable {
         modifier: Modifier,
+        onItemClick: (index: Int, itemId: Int) -> Unit,
         isListAndDetailVisible: Boolean,
         isListVisible: Boolean,
-        sharedTransitionScope: SharedTransitionScope,
-        animatedVisibilityScope: AnimatedVisibilityScope
-    ) {
+        sharedTransitionScope: SharedTransitionScope?,
+        animatedVisibilityScope: AnimatedVisibilityScope?
+    ->
         val list by listDataFlowFromViewModal().collectAsState(initial = emptyList())
         val selectedList = remember { mutableStateListOf<T>() }
 
-        Scaffold(
-            floatingActionButton = {
-                FloatingActionButton(onClick = onAdd) {
-                    actionButtonIcon()
-                }
-            }
-        ) {
-                padding -> LazyColumn(
-            modifier = Modifier.fillMaxHeight().padding(padding),
+        LazyColumn(
+            modifier = Modifier.fillMaxHeight(),
             contentPadding = PaddingValues(6.dp)
         ) {
             itemsIndexed(list) { index, item ->
@@ -108,7 +92,6 @@ abstract class BaseComposableListContent<T: BaseListItemType, V: ViewModel>(prot
                 }
             }
         }
-        }
     }
 
     @Composable
@@ -121,8 +104,8 @@ abstract class BaseComposableListContent<T: BaseListItemType, V: ViewModel>(prot
                                   isListAndDetailVisible: Boolean,
                                   isListVisible: Boolean,
                                   isSelected: Boolean,
-                                  sharedTransitionScope: SharedTransitionScope,
-                                  animatedVisibilityScope: AnimatedVisibilityScope
+                                  sharedTransitionScope: SharedTransitionScope?,
+                                  animatedVisibilityScope: AnimatedVisibilityScope?
     )
 }
 

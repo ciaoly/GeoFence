@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import top.cha01.geofence.data.database.AppDatabase
+import top.cha01.geofence.libs.UsbSerial.DeviceEndpoints
 import top.cha01.geofence.ui.screens.GeoFenceScreen
 import top.cha01.geofence.ui.screens.RcConfigScreen
 
@@ -34,9 +35,9 @@ val navigationList = listOf(
     )
 )
 
-fun NavGraphBuilder.appNavigation(db: AppDatabase) {
+fun NavGraphBuilder.appNavigation(db: AppDatabase, endpoints: DeviceEndpoints) {
     composable(Screen.RcConfig.route) {
-        RcConfigScreen(db.rcConfigDao())
+        RcConfigScreen(db.rcConfigDao(), endpoints)
     }
     composable(Screen.GeoFence.route) {
         GeoFenceScreen(db.geoFenceDao())

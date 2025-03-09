@@ -50,16 +50,16 @@ typealias listContentType = @Composable (
     onIndexClick: (index: Int, itemId: Int) -> Unit,
     isListAndDetailVisible: Boolean,
     isListVisible: Boolean,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedVisibilityScope: AnimatedVisibilityScope
+    sharedTransitionScope: SharedTransitionScope?,
+    animatedVisibilityScope: AnimatedVisibilityScope?
 ) -> Unit
 
 typealias detailContentType = @Composable (
     modifier: Modifier,
     isListAndDetailVisible: Boolean,
     isDetailVisible: Boolean,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedVisibilityScope: AnimatedVisibilityScope
+    sharedTransitionScope: SharedTransitionScope?,
+    animatedVisibilityScope: AnimatedVisibilityScope?
 ) -> Unit
 
 @SuppressLint("UnusedContentLambdaTargetStateParameter")
